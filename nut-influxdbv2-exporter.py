@@ -2,6 +2,7 @@
 import os
 import time
 import traceback
+import re
 
 from nut2 import PyNUTClient
 from influxdb_client import InfluxDBClient, Point, WriteOptions
@@ -64,7 +65,12 @@ if debug:
 
     
 # setup InfluxDB
-influxdb2_url="http://" + influxdb2_host + ":" + str(influxdb2_port)
+res = re.findall("https?://",influxdb2_host.lower())
+if (res):
+	influxdb2_url=influxdb2_host + ":" + str(influxdb2_port)
+else :
+	influxdb2_url="http://" + influxdb2_host + ":" + str(influxdb2_port)
+	
 if debug:
     print ( "influx: "+influxdb2_url )
     print ( "bucket: "+influxdb2_bucket )
