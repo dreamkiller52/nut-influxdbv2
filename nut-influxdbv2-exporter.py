@@ -8,6 +8,10 @@ from influxdb_client import InfluxDBClient, Point, WriteOptions
 from influxdb_client.client.write_api import SYNCHRONOUS
 import json, socket
 
+from urllib3 import Retry
+Retry.DEFAULT_REMOVE_HEADERS_ON_REDIRECT = frozenset()
+Retry.DEFAULT.remove_headers_on_redirect = Retry.DEFAULT_REMOVE_HEADERS_ON_REDIRECT
+
 
 # NUT related variables
 nut_port = os.getenv('NUT_PORT', '3493')
